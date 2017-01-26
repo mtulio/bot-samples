@@ -1,0 +1,5 @@
+{
+  "provider" : "Telegram|Whatsapp",
+  "name" : "bot_name",
+  "token" : "bot_token"
+}
