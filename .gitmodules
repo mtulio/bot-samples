@@ -1,0 +1,4 @@
+[submodule "telegram/linux_command/commons"]
+	path = telegram/linux_command/commons
+	url = git@github.com:mtulio/commons.git
+	branch = sub-bots-samples-telegram
