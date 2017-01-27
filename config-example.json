@@ -1,0 +1,9 @@
+{
+  "provider" : "Telegram|Whatsapp",
+  "name" : "bot_name",
+  "token" : "bot_token",
+  "allowed_users" : [
+    123456789,
+    234567891
+  ]
+}

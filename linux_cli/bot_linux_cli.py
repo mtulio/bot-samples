@@ -71,13 +71,33 @@ def bot_handler_command(command):
         return "I don't understand your message, can you repeate, please?"
 
 #####################
+# Bot minimal security restriction per user id
+def allowed_users(id_from):
+    if config_bot.has_key('allowed_users'):
+        for id_allow in config_bot['allowed_users']:
+            if id_from == id_allow:
+                return True
+    return False
+
 # Bot handler
 def bot_handle(msg):
     chat_id = msg['chat']['id']
     command = msg['text']
+    msg_id = msg['message_id']
+    #print repr(msg)
 
-    print '# %s chat_id sends a message: %s' % (chat_id, message)
-    return bot.sendMessage(chat_id, handle_command(command))
+    # 'allow/deny' check - login =p
+    if allowed_users(msg['from']['id']):
+        print '#%d> %s chat_id sends a message: %s' % (msg_id, chat_id, command)
+        return bot.sendMessage(chat_id, bot_handler_command(command))
+    else:
+        msg_from = msg['from']
+        if 'username' in msg_from:
+            print '#%d> Ignoring message from username \"%s\" [%s], message: \n%s' % (msg_id,
+                msg_from['username'], msg_from['id'], repr(msg))
+        else:
+            print '#%d> Ignoring message from username \"%s %s\" [%s], message: \n%s' % (msg_id,
+                msg_from['first_name'], msg_from['last_name'], msg_from['id'], repr(msg))
 
 #####################
 # Starting
@@ -85,12 +105,12 @@ def bot_handle(msg):
 def main():
     try:
         # Initializations
-        config_bot = config_read()
 
         # Bot config
+        global bot
         bot = telepot.Bot(config_bot['token'])
         bot.message_loop(bot_handle)
-        print '%s\'s Bot %s is listening...' % (config_bot['provider'], config_bot['user'])
+        print '\t%s\'s Bot %s is listening...' % (config_bot['provider'], config_bot['user'])
 
         #TODO: dev try/except and signals handle
         #TODO: run as a daemon, and not loop
@@ -103,4 +123,5 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
+    config_bot = config_read()
     main()
