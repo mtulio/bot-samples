@@ -17,6 +17,7 @@ def config_read():
         d = j_data.read()
     return json.loads(d)
 
+#############
 # RPi methods
 def rpi_init():
     GPIO.setmode(GPIO.BOARD)
