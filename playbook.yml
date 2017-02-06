@@ -1,0 +1,8 @@
+---
+- name: Playbook to config bots
+  hosts: myconfig
+  connection: ssh
+
+  tasks:
+    - name: 
+      include: "{{ bot_name }}/playbook.yml"
