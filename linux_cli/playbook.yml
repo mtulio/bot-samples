@@ -1,0 +1,33 @@
+---
+- name: Playbook to config bot linux_cli
+  hosts: mypi
+  connection: ssh
+  become: yes
+
+  vars:
+    config_file: config.json
+    config_json: []
+    system_user: bot_rpi
+    system_root: "/usr/local/bin/bot/{{ system_user }}"
+
+    bot_name: linux_cli
+    bot_provider:
+    bot_token:
+    bot_allowed_chats:
+
+  tasks:
+    - name: create bot user
+      user:
+        name:
+
+    - name: create bot dir
+    - name: create bot config.json
+      template: config.json.j2
+      when: config_json is defined
+
+    - name: Config python virtualenv
+
+    - name: Install requirements
+
+
+
